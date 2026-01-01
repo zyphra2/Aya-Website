@@ -74,4 +74,35 @@
   if(/Mobi|Android/i.test(navigator.userAgent)){
     knot.rotation.x = 0.2; knot.rotation.y = 0.3;
   }
+  <script>
+const langButtons = document.querySelectorAll("#langSwitcher button");
+let currentLang = "en"; // default
+
+langButtons.forEach(btn => {
+  btn.addEventListener("click", () => {
+    currentLang = btn.dataset.lang;
+    changeLanguage(currentLang);
+  });
+});
+
+function changeLanguage(lang) {
+  // Example: change static text on page
+  if (lang === "en") {
+    document.getElementById("aboutTitle").innerText = "About Me";
+    document.getElementById("contactTitle").innerText = "Contact Me";
+  } else if (lang === "ar") {
+    document.getElementById("aboutTitle").innerText = "تعريف بي";
+    document.getElementById("contactTitle").innerText = "تواصل معي";
+  } else if (lang === "fr") {
+    document.getElementById("aboutTitle").innerText = "À propos de moi";
+    document.getElementById("contactTitle").innerText = "Contactez-moi";
+  }
+
+  // Pass language to Chatbase AI
+  if(window.chatbase) {
+    window.chatbase('update', { language: lang }); // Example, Chatbase may use a custom param
+  }
+}
+</script>
 })();
+
